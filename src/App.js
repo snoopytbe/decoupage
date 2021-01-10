@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 import "moment/min/locales.min";
 import "./assets/styles/base.scss";
-import Depense from "./Depense";
+import Depense from "./Depense.js";
 import DateDepense from "./DateDepense";
 
 const data = [
@@ -66,13 +66,11 @@ class Main extends React.Component {
         />
         {this.state.depenses.map((item, index) => (
           <Depense
-            index={index}
             montant={item.montant}
             categorie={item.categorie}
             onDepenseChange={this.handleDepenseChange}
           />
         ))}
-
         <p>{startDate.toString()}</p>
         <ul>
           {this.state.depenses.map(item => (

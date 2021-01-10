@@ -44,4 +44,4 @@ class DateDepense extends React.Component {
   }
 }
 
-export default DateDepense
+export default DateDepense;

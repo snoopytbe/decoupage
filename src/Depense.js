@@ -1,13 +1,13 @@
 import React from "react";
 import "./assets/styles/base.scss";
-import { Field } from "redux-form";
-import renderField from "./components/FormInputs/renderField";
+import { Form, Field } from "react-final-form";
 
 class Depense extends React.Component {
   constructor(props) {
     super(props);
     this.handleMontantChange = this.handleMontantChange.bind(this);
     this.handleCategorieChange = this.handleCategorieChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleMontantChange(e) {
@@ -17,6 +17,8 @@ class Depense extends React.Component {
   handleCategorieChange(e) {
     this.props.onDepenseChange("Categorie", this.props.index, e.target.value);
   }
+
+  handleSubmit() {}
 
   render() {
     const montant = this.props.montant;
@@ -29,25 +31,46 @@ class Depense extends React.Component {
         </div>
         <div className="content">
           <div className="form-group">
-            <label className="control-label">Montant</label>
-            <Field
-              name="montant"
-              type="text"
-              value={montant}
-              onChange={this.handleMontantChange}
-              component={renderField}
-            />
-          </div>
-
-          <div className="form-group">
-            <label className="control-label">Catégorie</label>
-            <Field
-              name="categorie"
-              type="text"
-              value={categorie}
-              onChange={this.handleCategorieChange}
-              component={renderField}
-            />
+            <Form
+              onSubmit={values => {
+                // send values to the cloud
+              }}
+            >
+              <form>
+                <div>
+                  <label className="control-label">Montant</label>
+                  <Field name="montant">
+                    {field => (
+                      <div className="input-row">
+                        <input
+                          {...field.input}
+                          name="montant"
+                          type="text"
+                          value={montant}
+                          onChange={this.handleMontantChange}
+                        />
+                      </div>
+                    )}
+                  </Field>
+                </div>
+                <div>
+                  <label className="control-label">Catégorie</label>
+                  <Field name="categorie">
+                    {field => (
+                      <div className="input-row">
+                        <input
+                          {...field.input}
+                          name="categorie"
+                          type="text"
+                          value={categorie}
+                          onChange={this.handleCategorieChange}
+                        />{" "}
+                      </div>
+                    )}
+                  </Field>
+                </div>
+              </form>
+            </Form>
           </div>
         </div>
       </div>
@@ -55,4 +78,4 @@ class Depense extends React.Component {
   }
 }
 
-export default Depense
+export default Depense;

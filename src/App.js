@@ -4,6 +4,8 @@ import "moment/min/locales.min";
 import "./assets/styles/base.scss";
 import Depense from "./Depense.js";
 import DateDepense from "./DateDepense";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap";
 
 const data = [
   { label: "Paris" },
@@ -59,18 +61,23 @@ class Main extends React.Component {
     const startDate = this.state.dateChoisie;
 
     return (
-      <div className="App">
+      <div className="content">
         <DateDepense
           dateChoisie={startDate}
           onDateChoisieChange={this.handleDateChange}
         />
-        {this.state.depenses.map((item, index) => (
-          <Depense
-            montant={item.montant}
-            categorie={item.categorie}
-            onDepenseChange={this.handleDepenseChange}
-          />
-        ))}
+        <div className="card">
+          <div className="header">
+            <h4>Stacked Form</h4>
+          </div>
+          {this.state.depenses.map((item, index) => (
+            <Depense
+              montant={item.montant}
+              categorie={item.categorie}
+              onDepenseChange={this.handleDepenseChange}
+            />
+          ))}
+        </div>
         <p>{startDate.toString()}</p>
         <ul>
           {this.state.depenses.map(item => (

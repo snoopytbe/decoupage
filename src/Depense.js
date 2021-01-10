@@ -25,30 +25,20 @@ class Depense extends React.Component {
     const categorie = this.props.categorie;
 
     return (
-      <div className="card">
-        <div className="header">
-          <h4>Stacked Form</h4>
-        </div>
-        <div className="content">
-          <div className="form-group">
-            <Form
-              initialValues={{
-                firstName: "Dan"
-              }}
-              onSubmit={values => {
-                // send values to the cloud
-              }}
-              validate={values => {
-                // do validation here, and return errors object
-              }}
-            >
-              {() => (
-                <form>
-                  <div>
-                    <label className="control-label">Montant</label>
+      <div className="content">
+        <div className="form-horizontal">
+          <Form
+            onSubmit={
+            }
+          >
+            {() => (
+              <form>
+                <div className="row">
+                  <div className="form-group">
+                    <label className="control-label col-md-9">Montant</label>
                     <Field name="montant">
                       {field => (
-                        <div className="input-row">
+                        <div className="col-md-9">
                           <input
                             {...field.input}
                             name="montant"
@@ -60,11 +50,11 @@ class Depense extends React.Component {
                       )}
                     </Field>
                   </div>
-                  <div>
-                    <label className="control-label">Catégorie</label>
+                  <div className="form-group">
+                    <label className="control-label col-md-9">Catégorie</label>
                     <Field name="categorie">
                       {field => (
-                        <div className="input-row">
+                        <div className="col-md-9">
                           <input
                             {...field.input}
                             name="categorie"
@@ -76,10 +66,10 @@ class Depense extends React.Component {
                       )}
                     </Field>
                   </div>
-                </form>
-              )}
-            </Form>
-          </div>
+                </div>
+              </form>
+            )}
+          </Form>
         </div>
       </div>
     );

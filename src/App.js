@@ -1,11 +1,9 @@
- import React from "react";
-import { SingleDatePicker } from "react-dates";
+import React from "react";
 import moment from "moment";
 import "moment/min/locales.min";
 import "./assets/styles/base.scss";
-import i18n from "i18next";
-import { Field } from "redux-form";
-import renderField from "./components/FormInputs/renderField";
+import Depense from "./Depense";
+import DateDepense from "./DateDepense";
 
 const data = [
   { label: "Paris" },
@@ -21,97 +19,6 @@ const data = [
   { label: "Sao Paulo" },
   { label: "Toronto" }
 ];
-
-class DateDepense extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.state = {
-      focused: false
-    };
-  }
-
-  handleChange(date) {
-    this.props.onDateChoisieChange(date);
-  }
-
-  render() {
-    const startDate = this.props.dateChoisie;
-    moment.locale(i18n.language);
-
-    return (
-      <div className="card">
-        <div className="header">
-          <h4>Date de l'opération</h4>
-        </div>
-        <div className="content">
-          {
-            <SingleDatePicker
-              numberOfMonths={1}
-              onDateChange={this.handleChange}
-              focused={this.state.focused}
-              date={startDate}
-              onFocusChange={({ focused }) => this.setState({ focused })}
-              id="choixDate"
-            />
-          }
-        </div>
-      </div>
-    );
-  }
-}
-
-class Depense extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleMontantChange = this.handleMontantChange.bind(this);
-    this.handleCategorieChange = this.handleCategorieChange.bind(this);
-  }
-
-  handleMontantChange(e) {
-    this.props.onDepenseChange("Montant", this.props.index, e.target.value);
-  }
-
-  handleCategorieChange(e) {
-    this.props.onDepenseChange("Categorie", this.props.index, e.target.value);
-  }
-
-  render() {
-    const montant = this.props.montant;
-    const categorie = this.props.categorie;
-
-    return (
-      <div className="card">
-        <div className="header">
-          <h4>Stacked Form</h4>
-        </div>
-        <div className="content">
-          <div className="form-group">
-            <label className="control-label">Montant</label>
-            <Field
-              name="montant"
-              type="text"
-              value={montant}
-              onChange={this.handleMontantChange}
-              component={renderField}
-            />
-          </div>
-
-          <div className="form-group">
-            <label className="control-label">Catégorie</label>
-            <Field
-              name="categorie"
-              type="text"
-              value={categorie}
-              onChange={this.handleCategorieChange}
-              component={renderField}
-            />
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
 
 class Main extends React.Component {
   constructor(props) {

@@ -32,44 +32,52 @@ class Depense extends React.Component {
         <div className="content">
           <div className="form-group">
             <Form
+              initialValues={{
+                firstName: "Dan"
+              }}
               onSubmit={values => {
                 // send values to the cloud
               }}
+              validate={values => {
+                // do validation here, and return errors object
+              }}
             >
-              <form>
-                <div>
-                  <label className="control-label">Montant</label>
-                  <Field name="montant">
-                    {field => (
-                      <div className="input-row">
-                        <input
-                          {...field.input}
-                          name="montant"
-                          type="text"
-                          value={montant}
-                          onChange={this.handleMontantChange}
-                        />
-                      </div>
-                    )}
-                  </Field>
-                </div>
-                <div>
-                  <label className="control-label">Catégorie</label>
-                  <Field name="categorie">
-                    {field => (
-                      <div className="input-row">
-                        <input
-                          {...field.input}
-                          name="categorie"
-                          type="text"
-                          value={categorie}
-                          onChange={this.handleCategorieChange}
-                        />{" "}
-                      </div>
-                    )}
-                  </Field>
-                </div>
-              </form>
+              {() => (
+                <form>
+                  <div>
+                    <label className="control-label">Montant</label>
+                    <Field name="montant">
+                      {field => (
+                        <div className="input-row">
+                          <input
+                            {...field.input}
+                            name="montant"
+                            type="text"
+                            value={montant}
+                            onChange={this.handleMontantChange}
+                          />
+                        </div>
+                      )}
+                    </Field>
+                  </div>
+                  <div>
+                    <label className="control-label">Catégorie</label>
+                    <Field name="categorie">
+                      {field => (
+                        <div className="input-row">
+                          <input
+                            {...field.input}
+                            name="categorie"
+                            type="text"
+                            value={categorie}
+                            onChange={this.handleCategorieChange}
+                          />{" "}
+                        </div>
+                      )}
+                    </Field>
+                  </div>
+                </form>
+              )}
             </Form>
           </div>
         </div>

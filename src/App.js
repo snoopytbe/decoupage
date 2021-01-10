@@ -1,4 +1,4 @@
-import React from "react";
+ import React from "react";
 import { SingleDatePicker } from "react-dates";
 import moment from "moment";
 import "moment/min/locales.min";

@@ -21,20 +21,20 @@ class Depense extends React.Component {
   handleSubmit() {}
 
   render() {
-    const montant2 = this.props.montant;
-    const categorie2 = this.props.categorie;
+    const montant = this.props.montant;
+    const categorie = this.props.categorie;
 
     return (
       <div className="content">
         <div className="form-horizontal">
           <Form
-                   initialValues={{
-          montant: this.props.montant,
-     categorie: this.props.categorie
-       }}
-       onSubmit={values => {
-         // send values to the cloud
-       }}
+            initialValues={{
+              montant2: this.props.montant,
+              categorie2: this.props.categorie
+            }}
+            onSubmit={values => {
+              // send values to the cloud
+            }}
           >
             {() => (
               <form>
@@ -48,7 +48,7 @@ class Depense extends React.Component {
                             {...field.input}
                             name="montant"
                             type="text"
-                            //value={montant}
+                            /value={montant}
                             onChange={this.handleMontantChange}
                           />
                         </div>
@@ -64,9 +64,9 @@ class Depense extends React.Component {
                             {...field.input}
                             name="categorie"
                             type="text"
-                            /value={categorie}
+                            value={categorie}
                             onChange={this.handleCategorieChange}
-                          />{" "}
+                          />
                         </div>
                       )}
                     </Field>

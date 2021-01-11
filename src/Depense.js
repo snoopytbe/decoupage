@@ -48,7 +48,7 @@ class Depense extends React.Component {
                             {...field.input}
                             name="montant"
                             type="text"
-                            /value={montant}
+                            value={montant}
                             onChange={this.handleMontantChange}
                           />
                         </div>

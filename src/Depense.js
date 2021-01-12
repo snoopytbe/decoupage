@@ -5,52 +5,34 @@ import { Form, Field } from "react-final-form";
 class Depense extends React.Component {
   constructor(props) {
     super(props);
-    this.handleMontantChange = this.handleMontantChange.bind(this);
-    this.handleCategorieChange = this.handleCategorieChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleMontantChange(e) {
-    this.props.onDepenseChange("Montant", this.props.index, e.target.value);
+  handleSubmit(values) {
+    this.props.onDepenseChange("Montant", this.props.index, values.montant);
+    this.props.onDepenseChange("Categorie", this.props.index, values.categorie);
   }
-
-  handleCategorieChange(e) {
-    this.props.onDepenseChange("Categorie", this.props.index, e.target.value);
-  }
-
-  handleSubmit() {}
 
   render() {
-    const montant = this.props.montant;
-    const categorie = this.props.categorie;
-
     return (
       <div className="content">
         <div className="form-horizontal">
           <Form
             initialValues={{
-              montant2: this.props.montant,
-              categorie2: this.props.categorie
+              montant: this.props.montant,
+              categorie: this.props.categorie
             }}
-            onSubmit={values => {
-              // send values to the cloud
-            }}
+            onSubmit={this.handleSubmit}
           >
-            {() => (
-              <form>
+            {({ handleSubmit, form, submitting, pristine, values }) => (
+              <form onSubmit={handleSubmit}>
                 <div className="row">
                   <div className="form-group">
                     <label className="control-label col-md-9">Montant</label>
                     <Field name="montant">
                       {field => (
                         <div className="col-md-9">
-                          <input
-                            {...field.input}
-                            name="montant"
-                            type="text"
-                            value={montant}
-                            onChange={this.handleMontantChange}
-                          />
+                          <input {...field.input} name="montant" type="text" />
                         </div>
                       )}
                     </Field>
@@ -64,14 +46,15 @@ class Depense extends React.Component {
                             {...field.input}
                             name="categorie"
                             type="text"
-                            value={categorie}
-                            onChange={this.handleCategorieChange}
                           />
                         </div>
                       )}
                     </Field>
                   </div>
                 </div>
+                <button type="submit" disabled={submitting || pristine}>
+                  Submit
+                </button>
               </form>
             )}
           </Form>

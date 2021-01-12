@@ -74,6 +74,7 @@ class Main extends React.Component {
             <Depense
               montant={item.montant}
               categorie={item.categorie}
+              index={index}
               onDepenseChange={this.handleDepenseChange}
             />
           ))}

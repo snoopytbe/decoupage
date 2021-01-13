@@ -12,7 +12,9 @@ class DepenseArray extends React.Component {
           initialValues={{
             decoupe: this.props.decoupage
           }}
-          onSubmit={(values) => { console.log(JSON.stringify(values.decoupe))}}
+          onSubmit={(values) => {
+            console.log(JSON.stringify(values.decoupe));
+          }}
           mutators={{
             ...arrayMutators
           }}
@@ -52,23 +54,25 @@ class DepenseArray extends React.Component {
                       >
                         ✖
                       </span>
-                      { index === fields.length-1 ?
-                      <span
-                        role="img"
-                        aria-label="ajouter"
-                        onClick={() => fields.push(index + 1, undefined)}
-                        style={{ cursor: "pointer" }}
-                      >
-                        ➕
-                      </span> : <span
-                      display="none"
-                        role="img"
-                        aria-label="ajouter"
-                        onClick={() => fields.push(index + 1, undefined)}
-                        style={{ cursor: "pointer" }}
-                      >
-                        ➕
-                      </span>}
+                      {index === fields.length - 1 ? (
+                        <span
+                          role="img"
+                          aria-label="ajouter"
+                          onClick={() => fields.push(index + 1, undefined)}
+                          style={{ cursor: "pointer" }}
+                        >
+                          ➕
+                        </span>
+                      ) : (
+                        <span
+                          role="img"
+                          aria-label="ajouter"
+                          onClick={() => fields.push(index + 1, undefined)}
+                          style={{ visibility: "hidden", cursor: "pointer" }}
+                        >
+                          ➕
+                        </span>
+                      )}
                     </div>
                   ))
                 }

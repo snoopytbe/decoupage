@@ -42,9 +42,9 @@ export default styled.div`
     color: #222;
   }
 
-  h2 {
+  h2,h3,h4 {
     text-align: center;
-    color: #222;
+    color: #555;
   }
 
   & > div {
@@ -79,7 +79,7 @@ export default styled.div`
     max-width: 500px;
     margin: 10px auto;
     border: 1px solid #ccc;
-    padding: 20px;
+    padding: 10px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     border-radius: 3px;
     position: relative;
@@ -104,7 +104,7 @@ export default styled.div`
         flex: 1;
         padding: 3px 5px;
         font-size: 1em;
-        margin-left: 15px;
+        margin-left: 5px;
         width: 90px;
         min-width: 60px;
         border: 1px solid #ccc;

@@ -32,8 +32,6 @@ class DepenseArray extends React.Component {
                 {({ fields }) =>
                   fields.map((name, index) => (
                     <div key={name}>
-                      <label className="">Dépense #{index + 1}</label>
-
                       <Field
                         name={`${name}.montant`}
                         component="input"
@@ -47,14 +45,16 @@ class DepenseArray extends React.Component {
                       />
 
                       <span
-                        className=""
+                        role="img"
+                        aria-label="supprimer"
                         onClick={() => fields.remove(index)}
                         style={{ cursor: "pointer" }}
                       >
                         ✖
                       </span>
                       <span
-                        className=""
+                        role="img"
+                        aria-label="ajouter"
                         onClick={() => fields.push(index + 1, undefined)}
                         style={{ cursor: "pointer" }}
                       >

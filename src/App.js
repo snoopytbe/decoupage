@@ -56,14 +56,14 @@ class Main extends React.Component {
     return (
       <div>
         <Styles>
-          <h2>Date de l'opération</h2>
+          <h4>Date de l'opération</h4>
         </Styles>
         <DateDepense
           dateChoisie={startDate}
           onDateChoisieChange={this.handleDateChange}
         />
         <Styles>
-          <h2>Dépense à découper</h2>
+          <h4>Dépense à découper</h4>
 
           <DepenseSimple
             montant={this.state.depensesToCut.montant}
@@ -71,12 +71,9 @@ class Main extends React.Component {
             onDepenseChange={this.handleDepenseChange}
           />
 
-          <div className="card">
-            <div className="header">
-              <h4>Découpage</h4>
-            </div>
-            <DepenseArray decoupage={this.state.decoupage} />
-          </div>
+          <h4>Découpage</h4>
+
+          <DepenseArray decoupage={this.state.decoupage} />
 
           <p>{startDate.toString()}</p>
           <ul>

@@ -12,7 +12,7 @@ class DepenseArray extends React.Component {
           initialValues={{
             decoupe: this.props.decoupage
           }}
-          onSubmit={(values) => {}}
+          onSubmit={(values) => { console.log(JSON.stringify(values.decoupe))}}
           mutators={{
             ...arrayMutators
           }}
@@ -52,6 +52,7 @@ class DepenseArray extends React.Component {
                       >
                         ✖
                       </span>
+                      { index === fields.length-1 ?
                       <span
                         role="img"
                         aria-label="ajouter"
@@ -59,14 +60,22 @@ class DepenseArray extends React.Component {
                         style={{ cursor: "pointer" }}
                       >
                         ➕
-                      </span>
+                      </span> : <span
+                      display="none"
+                        role="img"
+                        aria-label="ajouter"
+                        onClick={() => fields.push(index + 1, undefined)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        ➕
+                      </span>}
                     </div>
                   ))
                 }
               </FieldArray>
               <div className="buttons">
                 <button type="submit" disabled={submitting || pristine}>
-                  Submit
+                  Valider
                 </button>
               </div>
             </form>

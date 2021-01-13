@@ -2,7 +2,8 @@ import React from "react";
 import moment from "moment";
 import "moment/min/locales.min";
 import "./assets/styles/base.scss";
-import Depense from "./Depense.js";
+import DepenseSimple from "./DepenseSimple.js";
+import DepenseArray from "./DepenseArray.js";
 import DateDepense from "./DateDepense";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap";
@@ -29,8 +30,8 @@ class Main extends React.Component {
     this.handleDepenseChange = this.handleDepenseChange.bind(this);
     this.state = {
       dateChoisie: moment("2021-05-18"),
-      depenses: [
-        { montant: 100, categorie: "Dépense" },
+      depensesToCut: { montant: 100, categorie: "Dépense" },
+      decoupage: [
         { montant: 100, categorie: "Dépense" },
         { montant: 0, categorie: "" }
       ]
@@ -41,19 +42,13 @@ class Main extends React.Component {
     this.setState({ dateChoisie: date });
   }
 
-  handleDepenseChange(type, i, valeur) {
+  handleDepenseChange(montant, categorie) {
     this.setState(state => {
-      const depenses = state.depenses.map((item, index) => {
-        if (index === i) {
-          return {
-            montant: type === "Montant" ? valeur : item.montant,
-            categorie: type === "Categorie" ? valeur : item.categorie
-          };
-        } else {
-          return item;
-        }
-      });
-      return { depenses };
+      const depensesToCut = {
+        montant: montant,
+        categorie: categorie
+      };
+      return { depensesToCut };
     });
   }
 
@@ -61,29 +56,44 @@ class Main extends React.Component {
     const startDate = this.state.dateChoisie;
 
     return (
-      <div className="content">
-        <DateDepense
-          dateChoisie={startDate}
-          onDateChoisieChange={this.handleDateChange}
-        />
+      <div className="main-panel">
         <div className="card">
           <div className="header">
-            <h4>Stacked Form</h4>
+            <h4>Date de l'opération</h4>
           </div>
-          {this.state.depenses.map((item, index) => (
-            <Depense
-              montant={item.montant}
-              categorie={item.categorie}
-              index={index}
-              onDepenseChange={this.handleDepenseChange}
-            />
-          ))}
+          <DateDepense
+            dateChoisie={startDate}
+            onDateChoisieChange={this.handleDateChange}
+          />
         </div>
+
+        <div className="card">
+          <div className="header">
+            <h4>Dépense à découper</h4>
+          </div>
+          <DepenseSimple
+            montant={this.state.depensesToCut.montant}
+            categorie={this.state.depensesToCut.categorie}
+            onDepenseChange={this.handleDepenseChange}
+          />
+        </div>
+
+        <div className="card">
+          <div className="header">
+            <h4>Découpage</h4>
+          </div>
+          <DepenseArray
+            decoupage={this.state.decoupage}
+          />
+        </div>
+
         <p>{startDate.toString()}</p>
         <ul>
-          {this.state.depenses.map(item => (
-            <li>{item.montant + " " + item.categorie}</li>
-          ))}
+          <li>
+            {this.state.depensesToCut.montant +
+              " " +
+              this.state.depensesToCut.categorie}
+          </li>
         </ul>
       </div>
     );

@@ -23,10 +23,7 @@ class DateDepense extends React.Component {
     moment.locale(i18n.language);
 
     return (
-      <div className="card">
-        <div className="header">
-          <h4>Date de l'opération</h4>
-        </div>
+
         <div className="content">
           {
             <SingleDatePicker
@@ -39,7 +36,7 @@ class DateDepense extends React.Component {
             />
           }
         </div>
-      </div>
+
     );
   }
 }

@@ -1,12 +1,10 @@
 import React from "react";
 import moment from "moment";
 import "moment/min/locales.min";
-import "./assets/styles/base.scss";
 import DepenseSimple from "./DepenseSimple.js";
 import DepenseArray from "./DepenseArray.js";
 import DateDepense from "./DateDepense";
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap";
+import Styles from "./Styles";
 
 const data = [
   { label: "Paris" },
@@ -43,7 +41,7 @@ class Main extends React.Component {
   }
 
   handleDepenseChange(montant, categorie) {
-    this.setState(state => {
+    this.setState((state) => {
       const depensesToCut = {
         montant: montant,
         categorie: categorie
@@ -56,45 +54,39 @@ class Main extends React.Component {
     const startDate = this.state.dateChoisie;
 
     return (
-      <div className="main-panel">
-        <div className="card">
-          <div className="header">
-            <h4>Date de l'opération</h4>
-          </div>
-          <DateDepense
-            dateChoisie={startDate}
-            onDateChoisieChange={this.handleDateChange}
-          />
-        </div>
+      <div>
+        <Styles>
+          <h2>Date de l'opération</h2>
+        </Styles>
+        <DateDepense
+          dateChoisie={startDate}
+          onDateChoisieChange={this.handleDateChange}
+        />
+        <Styles>
+          <h2>Dépense à découper</h2>
 
-        <div className="card">
-          <div className="header">
-            <h4>Dépense à découper</h4>
-          </div>
           <DepenseSimple
             montant={this.state.depensesToCut.montant}
             categorie={this.state.depensesToCut.categorie}
             onDepenseChange={this.handleDepenseChange}
           />
-        </div>
 
-        <div className="card">
-          <div className="header">
-            <h4>Découpage</h4>
+          <div className="card">
+            <div className="header">
+              <h4>Découpage</h4>
+            </div>
+            <DepenseArray decoupage={this.state.decoupage} />
           </div>
-          <DepenseArray
-            decoupage={this.state.decoupage}
-          />
-        </div>
 
-        <p>{startDate.toString()}</p>
-        <ul>
-          <li>
-            {this.state.depensesToCut.montant +
-              " " +
-              this.state.depensesToCut.categorie}
-          </li>
-        </ul>
+          <p>{startDate.toString()}</p>
+          <ul>
+            <li>
+              {this.state.depensesToCut.montant +
+                " " +
+                this.state.depensesToCut.categorie}
+            </li>
+          </ul>
+        </Styles>
       </div>
     );
   }

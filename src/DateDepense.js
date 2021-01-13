@@ -2,7 +2,6 @@ import React from "react";
 import { SingleDatePicker } from "react-dates";
 import moment from "moment";
 import "moment/min/locales.min";
-import "./assets/styles/base.scss";
 import i18n from "i18next";
 
 class DateDepense extends React.Component {
@@ -23,20 +22,18 @@ class DateDepense extends React.Component {
     moment.locale(i18n.language);
 
     return (
-
-        <div className="content">
-          {
-            <SingleDatePicker
-              numberOfMonths={1}
-              onDateChange={this.handleChange}
-              focused={this.state.focused}
-              date={startDate}
-              onFocusChange={({ focused }) => this.setState({ focused })}
-              id="choixDate"
-            />
-          }
-        </div>
-
+      <div align="center">
+        {
+          <SingleDatePicker
+            numberOfMonths={1}
+            onDateChange={this.handleChange}
+            focused={this.state.focused}
+            date={startDate}
+            onFocusChange={({ focused }) => this.setState({ focused })}
+            id="choixDate"
+          />
+        }
+      </div>
     );
   }
 }

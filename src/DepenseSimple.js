@@ -14,14 +14,7 @@ export default function DepenseSimple() {
           montant: depensesToCut.montant,
           categorie: depensesToCut.categorie
         }}
-        onSubmit={(values) => {
-          dispatch(
-            updateDepensesToCut({
-              montant: values.montant,
-              categorie: values.categorie
-            })
-          );
-        }}
+        onSubmit={(values) => {}}
       >
         {({ handleSubmit, form, submitting, pristine, values }) => (
           <form onSubmit={handleSubmit}>
@@ -39,7 +32,14 @@ export default function DepenseSimple() {
               <label>Montant</label>
               <Field name="montant">
                 {(field) => (
-                  <input {...field.input} name="montant" type="text" />
+                  <input
+                    {...field.input}
+                    name="montant"
+                    type="number"
+                    step="0.01"
+                    placeholder="Saisir le montant"
+                    required
+                  />
                 )}
               </Field>
             </div>
@@ -50,11 +50,6 @@ export default function DepenseSimple() {
                   <input {...field.input} name="categorie" type="text" />
                 )}
               </Field>
-            </div>
-            <div className="buttons">
-              <button type="submit" disabled={submitting || pristine}>
-                Valider
-              </button>
             </div>
           </form>
         )}

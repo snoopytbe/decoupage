@@ -16,13 +16,21 @@ export const slice = createSlice({
     },
     updateDepensesToCut: (state, action) => {
       state.depensesToCut = action.payload;
+    },
+    updateDecoupage: (state, action) => {
+      state.decoupage = action.payload;
     }
   }
 });
 
-export const { updateDate, updateDepensesToCut } = slice.actions;
+export const {
+  updateDate,
+  updateDepensesToCut,
+  updateDecoupage
+} = slice.actions;
 
 export const selectDateChoisie = (state) => state.updateDate.dateChoisie;
 export const selectDepensesToCut = (state) => state.updateDate.depensesToCut;
+export const selectDecoupage = (state) => state.updateDate.decoupage;
 
 export default slice.reducer;

@@ -6,7 +6,11 @@ import DepenseArray from "./DepenseArray.js";
 import DateDepense from "./DateDepense";
 import Styles from "./Styles";
 import { useSelector } from "react-redux";
-import { selectDateChoisie, selectDepensesToCut } from "./reducers";
+import {
+  selectDateChoisie,
+  selectDepensesToCut,
+  selectDecoupage
+} from "./reducers";
 
 const data = [
   { label: "DepenseSimpleParis" },
@@ -26,6 +30,7 @@ const data = [
 function Main() {
   const dateChoisie = useSelector(selectDateChoisie);
   const depensesToCut = useSelector(selectDepensesToCut);
+  const decoupage = useSelector(selectDecoupage);
 
   return (
     <div>
@@ -36,10 +41,15 @@ function Main() {
       <Styles>
         <h4>Dépense à découper</h4>
         <DepenseSimple />
-
         <h4>Découpage</h4>
+        <DepenseArray />
         <p>{dateChoisie.toString()}</p>
         <p>{depensesToCut.montant + " " + depensesToCut.categorie}</p>
+        <ul>
+          {decoupage.map((item) => (
+            <li>{item.montant + " " + item.categorie}</li>
+          ))}
+        </ul>
       </Styles>
     </div>
   );

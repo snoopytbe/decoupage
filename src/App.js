@@ -5,9 +5,11 @@ import DepenseSimple from "./DepenseSimple.js";
 import DepenseArray from "./DepenseArray.js";
 import DateDepense from "./DateDepense";
 import Styles from "./Styles";
+import { useSelector } from "react-redux";
+import { selectDateChoisie, selectDepensesToCut } from "./reducers";
 
 const data = [
-  { label: "Paris" },
+  { label: "DepenseSimpleParis" },
   { label: "New York" },
   { label: "San Fransisco" },
   { label: "Madrid" },
@@ -21,7 +23,29 @@ const data = [
   { label: "Toronto" }
 ];
 
-class Main extends React.Component {
+function Main() {
+  const dateChoisie = useSelector(selectDateChoisie);
+  const depensesToCut = useSelector(selectDepensesToCut);
+
+  return (
+    <div>
+      <Styles>
+        <h4>Date de l'opération</h4>
+      </Styles>
+      <DateDepense />
+      <Styles>
+        <h4>Dépense à découper</h4>
+        <DepenseSimple />
+
+        <h4>Découpage</h4>
+        <p>{dateChoisie.toString()}</p>
+        <p>{depensesToCut.montant + " " + depensesToCut.categorie}</p>
+      </Styles>
+    </div>
+  );
+}
+
+class Main2 extends React.Component {
   constructor(props) {
     super(props);
     this.handleDateChange = this.handleDateChange.bind(this);
@@ -75,7 +99,7 @@ class Main extends React.Component {
 
           <DepenseArray decoupage={this.state.decoupage} />
 
-          <p>{startDate.toString()}</p>
+          <p>{this.state.dateChoisie.toString()}</p>
           <ul>
             <li>
               {this.state.depensesToCut.montant +

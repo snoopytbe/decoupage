@@ -1,41 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { SingleDatePicker } from "react-dates";
 import moment from "moment";
 import "moment/min/locales.min";
-import i18n from "i18next";
+import { useSelector, useDispatch } from "react-redux";
+import { selectDateChoisie, updateDate } from "./reducers";
 
-class DateDepense extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.state = {
-      focused: false
-    };
-  }
+export default function DateDepense() {
+  moment.locale("fr-FR");
+  const dispatch = useDispatch();
+  const [focus, setFocus] = useState(false);
+  const [startDate, setStartDate] = useState(
+    moment(useSelector(selectDateChoisie))
+  );
 
-  handleChange(date) {
-    this.props.onDateChoisieChange(date);
-  }
+  const onDateChangeHandler = (date) => {
+    setStartDate(date);
+    dispatch(updateDate(date.format("YYYY-MM-DD")));
+  };
 
-  render() {
-    const startDate = this.props.dateChoisie;
-    moment.locale(i18n.language);
+  const onFocusChangeHandler = () => {
+    setFocus(!focus);
+  };
 
-    return (
-      <div align="center">
-        {
-          <SingleDatePicker
-            numberOfMonths={1}
-            onDateChange={this.handleChange}
-            focused={this.state.focused}
-            date={startDate}
-            onFocusChange={({ focused }) => this.setState({ focused })}
-            id="choixDate"
-          />
-        }
-      </div>
-    );
-  }
+  return (
+    <div align="center">
+      {
+        <SingleDatePicker
+          numberOfMonths={1}
+          onDateChange={onDateChangeHandler}
+          focused={focus}
+          date={startDate}
+          onFocusChange={onFocusChangeHandler}
+          id="choixDate"
+        />
+      }
+    </div>
+  );
 }
-
-export default DateDepense;

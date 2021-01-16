@@ -5,14 +5,14 @@ import { selectDepensesToCut, updateDepensesToCut } from "./reducers";
 
 export default function DepenseSimple() {
   const dispatch = useDispatch();
-  const [depensesToCut] = useState(useSelector(selectDepensesToCut));
+  const [depenseToCut] = useState(useSelector(selectDepensesToCut));
 
   return (
     <div className="content">
       <Form
         initialValues={{
-          montant: depensesToCut.montant,
-          categorie: depensesToCut.categorie
+          montant: depenseToCut.montant,
+          categorie: depenseToCut.categorie
         }}
         onSubmit={(values) => {}}
       >

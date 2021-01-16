@@ -12,11 +12,29 @@ import { FieldArray } from "react-final-form-arrays";
 
 export default function DepenseArray() {
   const dispatch = useDispatch();
-  const [decoupage] = useState(useSelector(selectDecoupage));
+  const [decoupage, setDecoupage] = useState(useSelector(selectDecoupage));
   const [depenseToCut] = useState(useSelector(selectDepensesToCut));
+
+  const convertToFloat = (x) => {
+    const parsed = parseFloat(x);
+    if (isNaN(parsed)) {
+      return 0;
+    }
+    return parsed;
+  };
+
+  const montantDecoupage0 = (dec) =>
+    depenseToCut.montant -
+    dec.reduce(
+      (accumulateur, valeurCourante) =>
+        dec.indexOf(valeurCourante) !== 0 &&
+        accumulateur + convertToFloat(valeurCourante.montant),
+      0
+    );
 
   return (
     <div className="content">
+      <p>{JSON.stringify(decoupage)}</p>
       <Form
         initialValues={{
           decoupe: decoupage,
@@ -41,12 +59,26 @@ export default function DepenseArray() {
           values
         }) => (
           <form onSubmit={handleSubmit}>
-            <FormSpy onChange={(state) => {}} />
             <div>
               <label>Montant</label>
               <label>Catégorie</label>
             </div>
             <div>
+              <FormSpy
+                onChange={(state) => {
+                  let newMontant = montantDecoupage0(state.values.decoupe);
+                  const newDecoupage = state.values.decoupe.map(
+                    (item, index) => {
+                      return {
+                        montant: index === 0 ? newMontant : item.montant,
+                        categorie: item.categorie
+                      };
+                    }
+                  );
+                  console.log(newDecoupage);
+                  dispatch(updateDecoupage(newDecoupage));
+                }}
+              />
               <Field name="montant">
                 {(field) => (
                   <input
@@ -55,7 +87,7 @@ export default function DepenseArray() {
                     type="number"
                     step="0.01"
                     placeholder="Saisir le montant"
-                    required
+                    disabled
                   />
                 )}
               </Field>
@@ -64,7 +96,7 @@ export default function DepenseArray() {
                   <input {...field.input} name="categorie" type="text" />
                 )}
               </Field>
-              <span class="button" />
+              <span className="button" />
             </div>
             <FieldArray name="decoupe">
               {({ fields }) =>
@@ -75,7 +107,10 @@ export default function DepenseArray() {
                         <Field
                           name={`${name}.montant`}
                           component="input"
-                          placeholder="Montant"
+                          type="number"
+                          step="0.01"
+                          placeholder="Saisir le montant"
+                          required
                         />
 
                         <Field
@@ -91,7 +126,7 @@ export default function DepenseArray() {
                               ? fields.remove(index)
                               : fields.push(index + 1, undefined)
                           }
-                          class="button"
+                          className="button"
                           style={{ cursor: "pointer" }}
                         >
                           {index < fields.length - 1 ? "✖" : "➕"}

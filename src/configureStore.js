@@ -1,8 +1,8 @@
-import updateDateReducer from "./reducers";
+import sliceDepenseToCutReducer from "./sliceDepenseToCut";
 import { configureStore } from "@reduxjs/toolkit";
 
 export default configureStore({
   reducer: {
-    updateDate: updateDateReducer
+    sliceDepenseToCut: sliceDepenseToCutReducer
   }
 });

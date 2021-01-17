@@ -1,16 +1,16 @@
 import React from "react";
-import moment from "moment";
-import "moment/min/locales.min";
-import DepenseSimple from "./DepenseSimple.js";
-import DepenseArray from "./DepenseArray.js";
+import DepenseToCut from "./DepenseToCut";
 import DateDepense from "./DateDepense";
+import DecoupagePart1 from "./DecoupagePart1";
+import DecoupagePart2 from "./DecoupagePart2";
 import Styles from "./Styles";
 import { useSelector } from "react-redux";
 import {
-  selectDateChoisie,
-  selectDepensesToCut,
-  selectDecoupage
-} from "./reducers";
+  selectDate,
+  selectDepense,
+  selectPart1,
+  selectPart2
+} from "./sliceDepenseToCut";
 
 const data = [
   { label: "DepenseSimpleParis" },
@@ -28,9 +28,10 @@ const data = [
 ];
 
 function Main() {
-  const dateChoisie = useSelector(selectDateChoisie);
-  const depensesToCut = useSelector(selectDepensesToCut);
-  const decoupage = useSelector(selectDecoupage);
+  //const dateChoisie = useSelector(selectDate);
+  const depenseToCut = useSelector(selectDepense);
+  const part1 = useSelector(selectPart1);
+  const part2 = useSelector(selectPart2);
 
   return (
     <div>
@@ -40,13 +41,14 @@ function Main() {
       <DateDepense />
       <Styles>
         <h4>Dépense à découper</h4>
-        <DepenseSimple />
+        <DepenseToCut />
         <h4>Découpage</h4>
-        <DepenseArray />
-        <p>{dateChoisie.toString()}</p>
-        <p>{depensesToCut.montant + " " + depensesToCut.categorie}</p>
+        <DecoupagePart1 />
+        <DecoupagePart2 />
+        <p>{depenseToCut.montant + " " + depenseToCut.categorie}</p>
+        <p>{part1.montant + " " + part1.categorie}</p>
         <ul>
-          {decoupage.map((item) => (
+          {part2.map((item) => (
             <li>{item.montant + " " + item.categorie}</li>
           ))}
         </ul>

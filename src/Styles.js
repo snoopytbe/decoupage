@@ -80,9 +80,9 @@ export default styled.div`
     text-align: left;
     max-width: 500px;
     margin: 10px auto;
-    border: 1px solid #ccc;
+    //border: 1px solid #ccc;
     padding: 10px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    //box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     border-radius: 3px;
     position: relative;
 

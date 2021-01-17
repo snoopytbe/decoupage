@@ -3,18 +3,21 @@ import "./assets/styles/base.scss";
 import { Form, Field, FormSpy } from "react-final-form";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import {
-  selectDepensesToCut,
-  selectDecoupage,
-  updateDecoupage
-} from "./reducers";
+  selectDepense,
+  selectPart1,
+  selectPart2,
+  updatePart2,
+  updatePart1
+} from "./sliceDepenseToCut";
 import arrayMutators from "final-form-arrays";
 import { FieldArray } from "react-final-form-arrays";
+import createDecorator from "final-form-calculate";
 
-export default function DepenseArray() {
+export default function DecoupagePart2() {
   const dispatch = useDispatch();
-  //const [decoupage, setDecoupage] = useState(useSelector(selectDecoupage,shallowEqual));
-  const decoupage = useSelector(selectDecoupage, shallowEqual);
-  const depenseToCut = useSelector(selectDepensesToCut);
+  const part1 = useSelector(selectPart1);
+  const part2 = useSelector(selectPart2);
+  const depenseToCut = useSelector(selectDepense);
 
   const convertToFloat = (x) => {
     const parsed = parseFloat(x);
@@ -24,24 +27,22 @@ export default function DepenseArray() {
     return parsed;
   };
 
-  const montantDecoupage0 = (dec) =>
+  const montantPart1 = (newPart2) =>
     depenseToCut.montant -
-    dec.reduce(
+    newPart2.reduce(
       (accumulateur, valeurCourante) =>
-        dec.indexOf(valeurCourante) !== 0 &&
         accumulateur + convertToFloat(valeurCourante.montant),
       0
     );
 
   return (
     <div className="content">
-      <p>{JSON.stringify(decoupage)}</p>
       <Form
         initialValues={{
-          decoupe: decoupage
+          tableau: part2
         }}
         onSubmit={(values) => {
-          dispatch(updateDecoupage(values.decoupe));
+          dispatch(updatePart2(values.tableau));
         }}
         mutators={{
           ...arrayMutators
@@ -59,30 +60,18 @@ export default function DepenseArray() {
         }) => (
           <form onSubmit={handleSubmit}>
             <div>
-              <label>Montant</label>
-              <label>Catégorie</label>
-            </div>
-            <div>
               <FormSpy
                 onChange={(state) => {
-                  //console.log(state);
-
-                  let newMontant = montantDecoupage0(state.values.decoupe);
-                  const newDecoupage = state.values.decoupe.map(
-                    (item, index) => {
-                      return {
-                        montant: index === 0 ? newMontant : item.montant,
-                        categorie: item.categorie
-                      };
-                    }
+                  dispatch(
+                    updatePart1({
+                      montant: montantPart1(state.values.tableau),
+                      categorie: part1.categorie
+                    })
                   );
-                  //console.log(newDecoupage);
-
-                  dispatch(updateDecoupage(newDecoupage));
                 }}
               />
             </div>
-            <FieldArray name="decoupe">
+            <FieldArray name="tableau">
               {({ fields }) =>
                 fields.map((name, index) => (
                   <div key={name}>
@@ -93,7 +82,6 @@ export default function DepenseArray() {
                       step="0.01"
                       placeholder="Saisir le montant"
                       required
-                      disabled={index === 0}
                     />
 
                     <Field
@@ -113,11 +101,19 @@ export default function DepenseArray() {
                       className="button"
                       style={{ cursor: "pointer" }}
                     >
-                      {index === 0
-                        ? ""
-                        : index < fields.length - 1
-                        ? "✖"
-                        : "➕"}
+                      {index < fields.length - 1 ? "✖" : "➕"}
+                    </span>
+
+                    <span
+                      role="img"
+                      aria-label="action"
+                      onClick={() =>
+                        index === fields.length - 1 && fields.remove(index)
+                      }
+                      className="button"
+                      style={{ cursor: "pointer" }}
+                    >
+                      {index === fields.length - 1 && "✖"}
                     </span>
                   </div>
                 ))

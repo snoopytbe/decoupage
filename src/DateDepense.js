@@ -3,15 +3,13 @@ import { SingleDatePicker } from "react-dates";
 import moment from "moment";
 import "moment/min/locales.min";
 import { useSelector, useDispatch } from "react-redux";
-import { selectDateChoisie, updateDate } from "./reducers";
+import { selectDate, updateDate } from "./sliceDepenseToCut";
 
 export default function DateDepense() {
   moment.locale("fr-FR");
   const dispatch = useDispatch();
   const [focus, setFocus] = useState(false);
-  const [startDate, setStartDate] = useState(
-    moment(useSelector(selectDateChoisie))
-  );
+  const [startDate, setStartDate] = useState(moment(useSelector(selectDate)));
 
   const onDateChangeHandler = (date) => {
     setStartDate(date);

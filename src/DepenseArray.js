@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./assets/styles/base.scss";
 import { Form, Field, FormSpy } from "react-final-form";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import {
   selectDepensesToCut,
   selectDecoupage,
@@ -12,8 +12,9 @@ import { FieldArray } from "react-final-form-arrays";
 
 export default function DepenseArray() {
   const dispatch = useDispatch();
-  const [decoupage, setDecoupage] = useState(useSelector(selectDecoupage));
-  const [depenseToCut] = useState(useSelector(selectDepensesToCut));
+  //const [decoupage, setDecoupage] = useState(useSelector(selectDecoupage,shallowEqual));
+  const decoupage = useSelector(selectDecoupage, shallowEqual);
+  const depenseToCut = useSelector(selectDepensesToCut);
 
   const convertToFloat = (x) => {
     const parsed = parseFloat(x);
@@ -37,9 +38,7 @@ export default function DepenseArray() {
       <p>{JSON.stringify(decoupage)}</p>
       <Form
         initialValues={{
-          decoupe: decoupage,
-          montant: decoupage[0].montant,
-          categorie: decoupage[0].categorie
+          decoupe: decoupage
         }}
         onSubmit={(values) => {
           dispatch(updateDecoupage(values.decoupe));
@@ -66,6 +65,8 @@ export default function DepenseArray() {
             <div>
               <FormSpy
                 onChange={(state) => {
+                  //console.log(state);
+
                   let newMontant = montantDecoupage0(state.values.decoupe);
                   const newDecoupage = state.values.decoupe.map(
                     (item, index) => {
@@ -75,65 +76,51 @@ export default function DepenseArray() {
                       };
                     }
                   );
-                  console.log(newDecoupage);
+                  //console.log(newDecoupage);
+
                   dispatch(updateDecoupage(newDecoupage));
                 }}
               />
-              <Field name="montant">
-                {(field) => (
-                  <input
-                    {...field.input}
-                    name="montant"
-                    type="number"
-                    step="0.01"
-                    placeholder="Saisir le montant"
-                    disabled
-                  />
-                )}
-              </Field>
-              <Field name="categorie">
-                {(field) => (
-                  <input {...field.input} name="categorie" type="text" />
-                )}
-              </Field>
-              <span className="button" />
             </div>
             <FieldArray name="decoupe">
               {({ fields }) =>
-                fields.map(
-                  (name, index) =>
-                    index > 0 && (
-                      <div key={name}>
-                        <Field
-                          name={`${name}.montant`}
-                          component="input"
-                          type="number"
-                          step="0.01"
-                          placeholder="Saisir le montant"
-                          required
-                        />
+                fields.map((name, index) => (
+                  <div key={name}>
+                    <Field
+                      name={`${name}.montant`}
+                      component="input"
+                      type="number"
+                      step="0.01"
+                      placeholder="Saisir le montant"
+                      required
+                      disabled={index === 0}
+                    />
 
-                        <Field
-                          name={`${name}.categorie`}
-                          component="input"
-                          placeholder="Catégorie"
-                        />
-                        <span
-                          role="img"
-                          aria-label="action"
-                          onClick={() =>
-                            index < fields.length - 1
-                              ? fields.remove(index)
-                              : fields.push(index + 1, undefined)
-                          }
-                          className="button"
-                          style={{ cursor: "pointer" }}
-                        >
-                          {index < fields.length - 1 ? "✖" : "➕"}
-                        </span>
-                      </div>
-                    )
-                )
+                    <Field
+                      name={`${name}.categorie`}
+                      component="input"
+                      placeholder="Catégorie"
+                    />
+
+                    <span
+                      role="img"
+                      aria-label="action"
+                      onClick={() =>
+                        index < fields.length - 1
+                          ? fields.remove(index)
+                          : fields.push(index + 1, undefined)
+                      }
+                      className="button"
+                      style={{ cursor: "pointer" }}
+                    >
+                      {index === 0
+                        ? ""
+                        : index < fields.length - 1
+                        ? "✖"
+                        : "➕"}
+                    </span>
+                  </div>
+                ))
               }
             </FieldArray>
             <div className="buttons">

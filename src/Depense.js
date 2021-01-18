@@ -1,6 +1,6 @@
 import React from "react";
 import { Field } from "react-final-form";
-import * as constantes from "./data";
+import * as constantes from "./constantes";
 
 export default function Depense(props) {
   return (

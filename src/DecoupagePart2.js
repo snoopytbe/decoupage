@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "./assets/styles/base.scss";
-import { Form, Field, FormSpy } from "react-final-form";
+import { Form, FormSpy } from "react-final-form";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectDepense,
@@ -18,6 +18,25 @@ export default function DecoupagePart2() {
   const part1 = useSelector(selectPart1);
   const part2 = useSelector(selectPart2);
   const depenseToCut = useSelector(selectDepense);
+  const [fileDownloadUrl, setFileDownloadUrl] = useState("");
+
+  function download() {
+    //event.preventDefault();
+    // Prepare the file
+    let output;
+    // Prepare data:
+    output = "";
+    output += "a \n";
+    part2.map((value) => (output += "b \n"));
+
+    // Download it
+    const blob = new Blob([output]);
+    const downloadUrl = URL.createObjectURL(blob);
+    setFileDownloadUrl({ downloadUrl });
+    this.dofileDownload.click();
+    URL.revokeObjectURL(downloadUrl); // free up storage--no longer needed.
+    setFileDownloadUrl("");
+  }
 
   const convertToFloat = (x) => {
     const parsed = parseFloat(x);
@@ -43,6 +62,7 @@ export default function DecoupagePart2() {
         }}
         onSubmit={(values) => {
           dispatch(updatePart2(values.tableau));
+          download();
         }}
         mutators={{
           ...arrayMutators
@@ -116,6 +136,14 @@ export default function DecoupagePart2() {
                 Valider
               </button>
             </div>
+            <a
+              style={{ display: "none" }}
+              download={"test.txt"}
+              href={fileDownloadUrl}
+              ref={(e) => (this.dofileDownload = e)}
+            >
+              download it
+            </a>
           </form>
         )}
       </Form>

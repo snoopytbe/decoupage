@@ -1,5 +1,6 @@
 import React from "react";
 import { Field } from "react-final-form";
+import * as constantes from "./data";
 
 export default function Depense(props) {
   return (
@@ -19,12 +20,15 @@ export default function Depense(props) {
       </Field>
       <Field name={props.NomCategorie}>
         {(field) => (
-          <input
+          <select
             {...field.input}
             name={props.NomCategorie}
             placeholder="Choisir la catégorie"
-            type="text"
-          />
+          >
+            {constantes.data.map((item) => (
+              <option>{item.label}</option>
+            ))}
+          </select>
         )}
       </Field>
       {console.log(props.sansSpan)}

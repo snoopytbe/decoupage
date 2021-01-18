@@ -12,21 +12,6 @@ import {
   selectPart2
 } from "./sliceDepenseToCut";
 
-const data = [
-  { label: "DepenseSimpleParis" },
-  { label: "New York" },
-  { label: "San Fransisco" },
-  { label: "Madrid" },
-  { label: "Miami" },
-  { label: "London" },
-  { label: "Tokyo" },
-  { label: "Barcelona " },
-  { label: "La Habana" },
-  { label: "Buenos Aires" },
-  { label: "Sao Paulo" },
-  { label: "Toronto" }
-];
-
 function Main() {
   //const dateChoisie = useSelector(selectDate);
   const depenseToCut = useSelector(selectDepense);

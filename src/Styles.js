@@ -79,9 +79,9 @@ export default styled.div`
   div.form {
     text-align: left;
     max-width: 500px;
-    margin: 10px auto;
+    margin: 0px auto;
     //border: 1px solid #ccc;
-    padding: 10px;
+    //padding: 10px;
     //box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     border-radius: 3px;
     position: relative;
@@ -132,7 +132,7 @@ export default styled.div`
       }
 
       & > span.button {
-        width: 30px;
+        width: 15px;
         height: 30px;
         text-align: center;
       }

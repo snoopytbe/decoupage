@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form, Field, FormSpy } from "react-final-form";
 import { useSelector, useDispatch } from "react-redux";
 import { selectDepense, updateDepense } from "./sliceDepenseToCut";
+import Depense from "Depense";
 
 export default function DepenseToCut() {
   const dispatch = useDispatch();
@@ -28,25 +29,12 @@ export default function DepenseToCut() {
                 );
               }}
             />
-
             <div>
-              <Field name="montant">
-                {(field) => (
-                  <input
-                    {...field.input}
-                    name="montant"
-                    type="number"
-                    step="0.01"
-                    placeholder="Saisir le montant"
-                    required
-                  />
-                )}
-              </Field>
-              <Field name="categorie">
-                {(field) => (
-                  <input {...field.input} name="categorie" type="text" />
-                )}
-              </Field>
+              <Depense
+                NomMontant="montant"
+                NomCategorie="categorie"
+                required={true}
+              />
             </div>
           </form>
         )}

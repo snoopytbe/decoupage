@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { Form, Field, FormSpy } from "react-final-form";
+import React from "react";
+import { Form, FormSpy } from "react-final-form";
 import { useSelector, useDispatch } from "react-redux";
 import { selectPart1, updatePart1 } from "./sliceDepenseToCut";
+import Depense from "Depense";
 
 export default function DecoupagePart1() {
   const dispatch = useDispatch();
@@ -27,27 +28,13 @@ export default function DecoupagePart1() {
                   })
                 );
               }}
-            />
-
+            />{" "}
             <div>
-              <Field name="montant">
-                {(field) => (
-                  <input
-                    {...field.input}
-                    name="montant"
-                    type="number"
-                    placeholder="Montant calculé"
-                    disabled
-                  />
-                )}
-              </Field>
-              <Field name="categorie">
-                {(field) => (
-                  <input {...field.input} name="categorie" type="text" />
-                )}
-              </Field>
-              <span className="button" />
-              <span className="button" />
+              <Depense
+                NomMontant="montant"
+                NomCategorie="categorie"
+                disabled={true}
+              />
             </div>
           </form>
         )}

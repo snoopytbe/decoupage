@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import "./assets/styles/base.scss";
 import { Form, Field, FormSpy } from "react-final-form";
-import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   selectDepense,
   selectPart1,
@@ -11,7 +11,7 @@ import {
 } from "./sliceDepenseToCut";
 import arrayMutators from "final-form-arrays";
 import { FieldArray } from "react-final-form-arrays";
-import createDecorator from "final-form-calculate";
+import Depense from "Depense";
 
 export default function DecoupagePart2() {
   const dispatch = useDispatch();
@@ -75,19 +75,11 @@ export default function DecoupagePart2() {
               {({ fields }) =>
                 fields.map((name, index) => (
                   <div key={name}>
-                    <Field
-                      name={`${name}.montant`}
-                      component="input"
-                      type="number"
-                      step="0.01"
-                      placeholder="Saisir le montant"
-                      required
-                    />
-
-                    <Field
-                      name={`${name}.categorie`}
-                      component="input"
-                      placeholder="Catégorie"
+                    <Depense
+                      NomMontant={`${name}.montant`}
+                      NomCategorie={`${name}.categorie`}
+                      required={true}
+                      sansSpan={true}
                     />
 
                     <span

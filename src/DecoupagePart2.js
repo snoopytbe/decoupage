@@ -26,8 +26,6 @@ export default function DecoupagePart2() {
     let output = "";
     output = qfxGen(dateChoisie, part1, part2);
 
-    console.log(output);
-
     const blob = new Blob([output]);
     const url = URL.createObjectURL(blob);
 
@@ -63,7 +61,19 @@ export default function DecoupagePart2() {
         }}
         onSubmit={(values) => {
           dispatch(updatePart2(values.tableau));
-          download();
+
+          let output = "";
+          output = qfxGen(dateChoisie, part1, values.tableau);
+
+          const blob = new Blob([output]);
+          const url = URL.createObjectURL(blob);
+
+          let a = document.createElement("a");
+          a.setAttribute("href", url);
+          a.setAttribute("download", "test.txt");
+          a.click();
+
+          URL.revokeObjectURL(url);
         }}
         mutators={{
           ...arrayMutators

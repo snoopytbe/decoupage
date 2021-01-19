@@ -18,24 +18,21 @@ export default function DecoupagePart2() {
   const part1 = useSelector(selectPart1);
   const part2 = useSelector(selectPart2);
   const depenseToCut = useSelector(selectDepense);
-  const [fileDownloadUrl, setFileDownloadUrl] = useState("");
 
   function download() {
-    //event.preventDefault();
-    // Prepare the file
-    let output;
-    // Prepare data:
-    output = "";
+    let output = "";
     output += "a \n";
     part2.map((value) => (output += "b \n"));
 
-    // Download it
     const blob = new Blob([output]);
-    const downloadUrl = URL.createObjectURL(blob);
-    setFileDownloadUrl({ downloadUrl });
-    this.dofileDownload.click();
-    URL.revokeObjectURL(downloadUrl); // free up storage--no longer needed.
-    setFileDownloadUrl("");
+    const url = URL.createObjectURL(blob);
+
+    let a = document.createElement("a");
+    a.setAttribute("href", url);
+    a.setAttribute("download", "test.txt");
+    a.click();
+
+    URL.revokeObjectURL(url);
   }
 
   const convertToFloat = (x) => {
@@ -132,18 +129,8 @@ export default function DecoupagePart2() {
               }
             </FieldArray>
             <div className="buttons">
-              <button type="submit" disabled={submitting || pristine}>
-                Valider
-              </button>
+              <button type="submit">Télécharger</button>
             </div>
-            <a
-              style={{ display: "none" }}
-              download={"test.txt"}
-              href={fileDownloadUrl}
-              ref={(e) => (this.dofileDownload = e)}
-            >
-              download it
-            </a>
           </form>
         )}
       </Form>

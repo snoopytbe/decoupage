@@ -13,7 +13,7 @@ export default function DateDepense() {
 
   const onDateChangeHandler = (date) => {
     setStartDate(date);
-    dispatch(updateDate(date.format("YYYY-MM-DD")));
+    dispatch(updateDate(date.format("DD/MM/YY")));
   };
 
   const onFocusChangeHandler = () => {

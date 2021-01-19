@@ -31,7 +31,6 @@ export default function Depense(props) {
           </select>
         )}
       </Field>
-      {console.log(props.sansSpan)}
       {props.sansSpan || (
         <>
           <span className="button" />

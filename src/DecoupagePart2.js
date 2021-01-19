@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import "./assets/styles/base.scss";
 import { Form, FormSpy } from "react-final-form";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  selectDate,
   selectDepense,
   selectPart1,
   selectPart2,
@@ -12,17 +13,20 @@ import {
 import arrayMutators from "final-form-arrays";
 import { FieldArray } from "react-final-form-arrays";
 import Depense from "Depense";
+import { qfxGen } from "QFXgen";
 
 export default function DecoupagePart2() {
   const dispatch = useDispatch();
+  const dateChoisie = useSelector(selectDate);
   const part1 = useSelector(selectPart1);
   const part2 = useSelector(selectPart2);
   const depenseToCut = useSelector(selectDepense);
 
   function download() {
     let output = "";
-    output += "a \n";
-    part2.map((value) => (output += "b \n"));
+    output = qfxGen(dateChoisie, part1, part2);
+
+    console.log(output);
 
     const blob = new Blob([output]);
     const url = URL.createObjectURL(blob);
@@ -134,6 +138,7 @@ export default function DecoupagePart2() {
           </form>
         )}
       </Form>
+      <div style={{ display: "none" }}>{dateChoisie}</div>
     </div>
   );
 }

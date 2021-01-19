@@ -20,7 +20,6 @@ export const slice = createSlice({
       state.part1 = action.payload;
     },
     updatePart2: (state, action) => {
-      console.log(action.payload);
       state.part2 = action.payload;
     }
   }
